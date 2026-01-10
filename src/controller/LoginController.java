@@ -36,7 +36,6 @@ public class LoginController {
 
                 case "Student":
                     StudentDashboardView studentView = new StudentDashboardView();
-                    // මෙතැනදී StudentController පණගැන්වීම අනිවාර්ය වේ
                     new StudentController(studentView);
                     studentView.setVisible(true);
                     break;
