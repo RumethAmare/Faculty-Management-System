@@ -31,13 +31,29 @@ public class DepartmentServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Department dept = gson.fromJson(reader, Department.class);
-        
-        boolean success = departmentDAO.addDepartment(dept.getId(), dept.getName(), dept.getHod(), dept.getStaffCount());
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("Received JSON: " + sb.toString());
+            
+            Department dept = gson.fromJson(sb.toString(), Department.class);
+            System.out.println("Parsed Department: id=" + dept.getId() + ", name=" + dept.getName());
+            
+            boolean success = departmentDAO.addDepartment(dept.getId(), dept.getName(), dept.getHod(), dept.getStaffCount());
+            System.out.println("Insert result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Department added successfully" : "Failed to add department")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Department added successfully" : "Failed to add department")));
+        } catch (Exception e) {
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override
@@ -47,13 +63,30 @@ public class DepartmentServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Department dept = gson.fromJson(reader, Department.class);
-        
-        boolean success = departmentDAO.updateDepartment(dept.getId(), dept.getName(), dept.getHod(), dept.getStaffCount());
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[DepartmentServlet] PUT - Received JSON: " + sb.toString());
+            
+            Department dept = gson.fromJson(sb.toString(), Department.class);
+            System.out.println("[DepartmentServlet] PUT - Parsed Department: id=" + dept.getId() + ", name=" + dept.getName());
+            
+            boolean success = departmentDAO.updateDepartment(dept.getId(), dept.getName(), dept.getHod(), dept.getStaffCount());
+            System.out.println("[DepartmentServlet] PUT - Update result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Department updated successfully" : "Failed to update department")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Department updated successfully" : "Failed to update department")));
+        } catch (Exception e) {
+            System.err.println("[DepartmentServlet] PUT Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override

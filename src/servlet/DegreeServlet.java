@@ -31,13 +31,30 @@ public class DegreeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Degree degree = gson.fromJson(reader, Degree.class);
-        
-        boolean success = degreeDAO.addDegree(degree.getId(), degree.getName(), degree.getDeptId());
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[DegreeServlet] Received JSON: " + sb.toString());
+            
+            Degree degree = gson.fromJson(sb.toString(), Degree.class);
+            System.out.println("[DegreeServlet] Parsed Degree: id=" + degree.getId() + ", name=" + degree.getName());
+            
+            boolean success = degreeDAO.addDegree(degree.getId(), degree.getName(), degree.getDeptId());
+            System.out.println("[DegreeServlet] Insert result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Degree added successfully" : "Failed to add degree")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Degree added successfully" : "Failed to add degree")));
+        } catch (Exception e) {
+            System.err.println("[DegreeServlet] Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override

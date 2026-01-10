@@ -31,18 +31,35 @@ public class CourseServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Course course = gson.fromJson(reader, Course.class);
-        
-        boolean success = courseDAO.addCourse(
-            course.getCourseId(), 
-            course.getCourseName(), 
-            course.getCredits(), 
-            course.getLecturerId()
-        );
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[CourseServlet] Received JSON: " + sb.toString());
+            
+            Course course = gson.fromJson(sb.toString(), Course.class);
+            System.out.println("[CourseServlet] Parsed Course: id=" + course.getCourseId() + ", name=" + course.getCourseName());
+            
+            boolean success = courseDAO.addCourse(
+                course.getCourseId(), 
+                course.getCourseName(), 
+                course.getCredits(), 
+                course.getLecturerId()
+            );
+            System.out.println("[CourseServlet] Insert result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Course added successfully" : "Failed to add course")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Course added successfully" : "Failed to add course")));
+        } catch (Exception e) {
+            System.err.println("[CourseServlet] Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override
@@ -52,18 +69,35 @@ public class CourseServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Course course = gson.fromJson(reader, Course.class);
-        
-        boolean success = courseDAO.updateCourse(
-            course.getCourseId(), 
-            course.getCourseName(), 
-            course.getCredits(), 
-            course.getLecturerId()
-        );
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[CourseServlet] PUT - Received JSON: " + sb.toString());
+            
+            Course course = gson.fromJson(sb.toString(), Course.class);
+            System.out.println("[CourseServlet] PUT - Parsed Course: id=" + course.getCourseId() + ", name=" + course.getCourseName());
+            
+            boolean success = courseDAO.updateCourse(
+                course.getCourseId(), 
+                course.getCourseName(), 
+                course.getCredits(), 
+                course.getLecturerId()
+            );
+            System.out.println("[CourseServlet] PUT - Update result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Course updated successfully" : "Failed to update course")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Course updated successfully" : "Failed to update course")));
+        } catch (Exception e) {
+            System.err.println("[CourseServlet] PUT Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override
