@@ -7,6 +7,16 @@
 
     <display-name>Faculty Management System</display-name>
 
+    <!-- Login Servlet -->
+    <servlet>
+        <servlet-name>LoginServlet</servlet-name>
+        <servlet-class>servlet.LoginServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>LoginServlet</servlet-name>
+        <url-pattern>/api/login</url-pattern>
+    </servlet-mapping>
+
     <!-- Course Servlet -->
     <servlet>
         <servlet-name>CourseServlet</servlet-name>
