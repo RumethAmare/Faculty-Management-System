@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Department Management</title>
+    <link rel="stylesheet" href="css/department.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Department Management</h1>
+        
+        <!-- Add/Edit Form -->
+        <div class="form-section">
+            <h2 id="form-title">Add New Department</h2>
+            <form id="departmentForm">
+                <input type="hidden" id="editMode" value="false">
+                
+                <div class="form-group">
+                    <label for="deptId">Department ID:</label>
+                    <input type="text" id="deptId" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deptName">Department Name:</label>
+                    <input type="text" id="deptName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="hod">Head of Department:</label>
+                    <input type="text" id="hod" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="staffCount">Staff Count:</label>
+                    <input type="number" id="staffCount" min="0" required>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Department List -->
+        <div class="list-section">
+            <h2>Department List</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search departments...">
+            </div>
+            <table id="departmentTable">
+                <thead>
+                    <tr>
+                        <th>Department ID</th>
+                        <th>Department Name</th>
+                        <th>Head of Department</th>
+                        <th>Staff Count</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="departmentTableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="js/department.js"></script>
+</body>
+</html>

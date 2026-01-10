@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <link rel="stylesheet" href="css/user.css">
+</head>
+<body>
+    <div class="container">
+        <h1>User Management</h1>
+        
+        <!-- Add/Edit Form -->
+        <div class="form-section">
+            <h2 id="form-title">Add New User</h2>
+            <form id="userForm">
+                <input type="hidden" id="editMode" value="false">
+                
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="role">Role:</label>
+                    <select id="role" required>
+                        <option value="">Select Role</option>
+                        <option value="admin">Admin</option>
+                        <option value="lecturer">Lecturer</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- User List -->
+        <div class="list-section">
+            <h2>User List</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search users...">
+            </div>
+            <table id="userTable">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="userTableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="js/user.js"></script>
+</body>
+</html>
