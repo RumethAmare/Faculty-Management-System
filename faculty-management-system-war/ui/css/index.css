@@ -1,0 +1,171 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 50px;
+    padding: 40px 20px;
+}
+
+header h1 {
+    font-size: 3em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+    margin-bottom: 50px;
+}
+
+.dashboard-card {
+    background: white;
+    border-radius: 15px;
+    padding: 30px;
+    text-decoration: none;
+    color: #333;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+}
+
+.card-icon {
+    font-size: 4em;
+    margin-bottom: 20px;
+}
+
+.dashboard-card h2 {
+    font-size: 1.8em;
+    margin-bottom: 10px;
+    color: #555;
+}
+
+.dashboard-card p {
+    color: #777;
+    line-height: 1.6;
+}
+
+/* Card-specific colors */
+.course-card:hover {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+
+.course-card:hover h2,
+.course-card:hover p {
+    color: white;
+}
+
+.degree-card:hover {
+    background: linear-gradient(135deg, #43cea2 0%, #185a9d 100%);
+    color: white;
+}
+
+.degree-card:hover h2,
+.degree-card:hover p {
+    color: white;
+}
+
+.department-card:hover {
+    background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+    color: white;
+}
+
+.department-card:hover h2,
+.department-card:hover p {
+    color: white;
+}
+
+.lecturer-card:hover {
+    background: linear-gradient(135deg, #fbc2eb 0%, #a6c1ee 100%);
+    color: white;
+}
+
+.lecturer-card:hover h2,
+.lecturer-card:hover p {
+    color: white;
+}
+
+.student-card:hover {
+    background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);
+    color: white;
+}
+
+.student-card:hover h2,
+.student-card:hover p {
+    color: white;
+}
+
+.user-card:hover {
+    background: linear-gradient(135deg, #30cfd0 0%, #330867 100%);
+    color: white;
+}
+
+.user-card:hover h2,
+.user-card:hover p {
+    color: white;
+}
+
+footer {
+    text-align: center;
+    color: white;
+    padding: 20px;
+    opacity: 0.8;
+}
+
+@media (max-width: 768px) {
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .subtitle {
+        font-size: 1em;
+    }
+    
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .dashboard-card {
+        padding: 20px;
+    }
+    
+    .card-icon {
+        font-size: 3em;
+    }
+    
+    .dashboard-card h2 {
+        font-size: 1.5em;
+    }
+}
