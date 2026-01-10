@@ -21,7 +21,7 @@ public class StudentController {
             String name = data[0];
             String email = data[1];
             String mobile = data[2];
-            String studentId = "STU/2024/001";
+            String studentId = "stu02";
 
             if (studentDAO.updateStudent(studentId, name, email, "BSc in Information Technology")) {
                 view.updateProfileDisplay(name, email, mobile);
