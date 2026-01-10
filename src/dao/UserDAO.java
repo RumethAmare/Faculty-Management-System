@@ -69,4 +69,22 @@ public class UserDAO {
             return pstmt.executeUpdate() > 0;
         } catch (SQLException e) { e.printStackTrace(); return false; }
     }
+
+    public boolean usernameExists(String username) {
+        String sql = "SELECT username FROM users WHERE username=?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, username);
+            try (ResultSet rs = pstmt.executeQuery()) {
+                return rs.next();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean addUser(User user) {
+        return addUser(user.getUsername(), user.getPassword(), user.getRole());
+    }
 }
