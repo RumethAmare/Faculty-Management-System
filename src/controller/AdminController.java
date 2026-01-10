@@ -30,19 +30,15 @@ public class AdminController {
         view.getBtnAddStudent().addActionListener(e -> addStudent());
         view.getBtnUpdateStudent().addActionListener(e -> updateStudent());
         view.getBtnDeleteStudent().addActionListener(e -> deleteStudent());
-
         view.getBtnAddLecturer().addActionListener(e -> addLecturer());
         view.getBtnUpdateLecturer().addActionListener(e -> updateLecturer());
         view.getBtnDeleteLecturer().addActionListener(e -> deleteLecturer());
-
         view.getBtnAddCourse().addActionListener(e -> addCourse());
         view.getBtnUpdateCourse().addActionListener(e -> updateCourse());
         view.getBtnDeleteCourse().addActionListener(e -> deleteCourse());
-
         view.getBtnAddDept().addActionListener(e -> addDepartment());
         view.getBtnUpdateDept().addActionListener(e -> updateDepartment());
         view.getBtnDeleteDept().addActionListener(e -> deleteDepartment());
-
         view.getBtnAddDegree().addActionListener(e -> addDegree());
         view.getBtnUpdateDegree().addActionListener(e -> updateDegree());
         view.getBtnDeleteDegree().addActionListener(e -> deleteDegree());

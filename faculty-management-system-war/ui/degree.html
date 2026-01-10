@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Degree Management</title>
+    <link rel="stylesheet" href="css/degree.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Degree Management</h1>
+        
+        <!-- Add/Edit Form -->
+        <div class="form-section">
+            <h2 id="form-title">Add New Degree</h2>
+            <form id="degreeForm">
+                <input type="hidden" id="editMode" value="false">
+                
+                <div class="form-group">
+                    <label for="degreeId">Degree ID:</label>
+                    <input type="text" id="degreeId" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="degreeName">Degree Name:</label>
+                    <input type="text" id="degreeName" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="deptId">Department ID:</label>
+                    <input type="text" id="deptId" required>
+                </div>
+                
+                <div class="form-buttons">
+                    <button type="submit" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-secondary" onclick="resetForm()">Cancel</button>
+                </div>
+            </form>
+        </div>
+        
+        <!-- Degree List -->
+        <div class="list-section">
+            <h2>Degree List</h2>
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="Search degrees...">
+            </div>
+            <table id="degreeTable">
+                <thead>
+                    <tr>
+                        <th>Degree ID</th>
+                        <th>Degree Name</th>
+                        <th>Department ID</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="degreeTableBody">
+                    <!-- Data will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="js/degree.js"></script>
+</body>
+</html>
