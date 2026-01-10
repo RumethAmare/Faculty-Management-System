@@ -31,6 +31,15 @@ public class DegreeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
+        // Check authorization - only admin can create
+        HttpSession session = request.getSession(false);
+        if (session == null || !"admin".equals(session.getAttribute("role"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Access denied. Only admin can create degrees.")));
+            return;
+        }
+
         try {
             BufferedReader reader = request.getReader();
             StringBuilder sb = new StringBuilder();
@@ -64,6 +73,15 @@ public class DegreeServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
+        // Check authorization - only admin can update
+        HttpSession session = request.getSession(false);
+        if (session == null || !"admin".equals(session.getAttribute("role"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Access denied. Only admin can update degrees.")));
+            return;
+        }
+
         BufferedReader reader = request.getReader();
         Degree degree = gson.fromJson(reader, Degree.class);
         
@@ -79,6 +97,15 @@ public class DegreeServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
+
+        // Check authorization - only admin can delete
+        HttpSession session = request.getSession(false);
+        if (session == null || !"admin".equals(session.getAttribute("role"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Access denied. Only admin can delete degrees.")));
+            return;
+        }
 
         String degreeId = request.getParameter("id");
         boolean success = degreeDAO.deleteDegree(degreeId);
