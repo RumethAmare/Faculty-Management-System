@@ -31,13 +31,30 @@ public class StudentServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Student student = gson.fromJson(reader, Student.class);
-        
-        boolean success = studentDAO.addStudent(student.getId(), student.getName(), student.getEmail(), student.getDegree());
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[StudentServlet] Received JSON: " + sb.toString());
+            
+            Student student = gson.fromJson(sb.toString(), Student.class);
+            System.out.println("[StudentServlet] Parsed Student: id=" + student.getId() + ", name=" + student.getName());
+            
+            boolean success = studentDAO.addStudent(student.getId(), student.getName(), student.getEmail(), student.getDegree());
+            System.out.println("[StudentServlet] Insert result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Student added successfully" : "Failed to add student")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Student added successfully" : "Failed to add student")));
+        } catch (Exception e) {
+            System.err.println("[StudentServlet] Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override
@@ -47,13 +64,30 @@ public class StudentServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Student student = gson.fromJson(reader, Student.class);
-        
-        boolean success = studentDAO.updateStudent(student.getId(), student.getName(), student.getEmail(), student.getDegree());
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[StudentServlet] PUT - Received JSON: " + sb.toString());
+            
+            Student student = gson.fromJson(sb.toString(), Student.class);
+            System.out.println("[StudentServlet] PUT - Parsed Student: id=" + student.getId() + ", name=" + student.getName());
+            
+            boolean success = studentDAO.updateStudent(student.getId(), student.getName(), student.getEmail(), student.getDegree());
+            System.out.println("[StudentServlet] PUT - Update result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Student updated successfully" : "Failed to update student")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Student updated successfully" : "Failed to update student")));
+        } catch (Exception e) {
+            System.err.println("[StudentServlet] PUT Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override

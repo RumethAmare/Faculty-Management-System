@@ -9,8 +9,16 @@
 <body>
     <div class="container">
         <header>
-            <h1>Faculty Management System</h1>
-            <p class="subtitle">Manage all aspects of your faculty</p>
+            <div class="header-content">
+                <div>
+                    <h1>Faculty Management System</h1>
+                    <p class="subtitle">Manage all aspects of your faculty</p>
+                </div>
+                <div class="user-info">
+                    <span id="welcomeMsg"></span>
+                    <button onclick="logout()" class="btn-logout">Logout</button>
+                </div>
+            </div>
         </header>
         
         <div class="dashboard-grid">
@@ -55,5 +63,24 @@
             <p>&copy; 2026 Faculty Management System. All rights reserved.</p>
         </footer>
     </div>
+    
+    <script>
+        // Check if user is logged in
+        window.addEventListener('DOMContentLoaded', function() {
+            const user = sessionStorage.getItem('user');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            document.getElementById('welcomeMsg').textContent = `Welcome, ${userData.username} (${userData.role})`;
+        });
+        
+        function logout() {
+            sessionStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
 </body>
 </html>
