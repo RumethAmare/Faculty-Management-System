@@ -31,13 +31,30 @@ public class LecturerServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
-        BufferedReader reader = request.getReader();
-        Lecturer lecturer = gson.fromJson(reader, Lecturer.class);
-        
-        boolean success = lecturerDAO.addLecturer(lecturer.getId(), lecturer.getName(), lecturer.getEmail(), lecturer.getDepartment());
+        try {
+            BufferedReader reader = request.getReader();
+            StringBuilder sb = new StringBuilder();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                sb.append(line);
+            }
+            
+            System.out.println("[LecturerServlet] Received JSON: " + sb.toString());
+            
+            Lecturer lecturer = gson.fromJson(sb.toString(), Lecturer.class);
+            System.out.println("[LecturerServlet] Parsed Lecturer: id=" + lecturer.getId() + ", name=" + lecturer.getName());
+            
+            boolean success = lecturerDAO.addLecturer(lecturer.getId(), lecturer.getName(), lecturer.getEmail(), lecturer.getDepartment());
+            System.out.println("[LecturerServlet] Insert result: " + success);
 
-        PrintWriter out = response.getWriter();
-        out.print(gson.toJson(new Response(success, success ? "Lecturer added successfully" : "Failed to add lecturer")));
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(success, success ? "Lecturer added successfully" : "Failed to add lecturer")));
+        } catch (Exception e) {
+            System.err.println("[LecturerServlet] Error: " + e.getMessage());
+            e.printStackTrace();
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Error: " + e.getMessage())));
+        }
     }
 
     @Override
