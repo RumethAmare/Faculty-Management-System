@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Management System - Dashboard</title>
+    <link rel="stylesheet" href="css/index.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-content">
+                <div>
+                    <h1>Faculty Management System</h1>
+                    <p class="subtitle">Manage all aspects of your faculty</p>
+                </div>
+                <div class="user-info">
+                    <span id="welcomeMsg"></span>
+                    <button onclick="logout()" class="btn-logout">Logout</button>
+                </div>
+            </div>
+        </header>
+        
+        <div class="dashboard-grid">
+            <a href="course.html" class="dashboard-card course-card">
+                <div class="card-icon">📚</div>
+                <h2>Courses</h2>
+                <p>Manage course information, credits, and lecturer assignments</p>
+            </a>
+            
+            <a href="degree.html" class="dashboard-card degree-card">
+                <div class="card-icon">🎓</div>
+                <h2>Degrees</h2>
+                <p>Manage degree programs and department associations</p>
+            </a>
+            
+            <a href="department.html" class="dashboard-card department-card">
+                <div class="card-icon">🏢</div>
+                <h2>Departments</h2>
+                <p>Manage departments, heads, and staff counts</p>
+            </a>
+            
+            <a href="lecturer.html" class="dashboard-card lecturer-card">
+                <div class="card-icon">👨‍🏫</div>
+                <h2>Lecturers</h2>
+                <p>Manage lecturer profiles and department assignments</p>
+            </a>
+            
+            <a href="student.html" class="dashboard-card student-card">
+                <div class="card-icon">👨‍🎓</div>
+                <h2>Students</h2>
+                <p>Manage student information and degree enrollments</p>
+            </a>
+            
+            <a href="user.html" class="dashboard-card user-card">
+                <div class="card-icon">👤</div>
+                <h2>Users</h2>
+                <p>Manage system users and access roles</p>
+            </a>
+        </div>
+        
+        <footer>
+            <p>&copy; 2026 Faculty Management System. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script>
+        // Check if user is logged in
+        window.addEventListener('DOMContentLoaded', function() {
+            const user = sessionStorage.getItem('user');
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            const userData = JSON.parse(user);
+            document.getElementById('welcomeMsg').textContent = `Welcome, ${userData.username} (${userData.role})`;
+        });
+        
+        function logout() {
+            sessionStorage.removeItem('user');
+            window.location.href = 'login.html';
+        }
+    </script>
+</body>
+</html>
