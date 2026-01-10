@@ -31,6 +31,15 @@ public class UserServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
+        // Check authorization - only admin can create users
+        HttpSession session = request.getSession(false);
+        if (session == null || !"admin".equals(session.getAttribute("role"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Access denied. Only admin can create users.")));
+            return;
+        }
+
         BufferedReader reader = request.getReader();
         User user = gson.fromJson(reader, User.class);
         
@@ -47,6 +56,15 @@ public class UserServlet extends HttpServlet {
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
 
+        // Check authorization - only admin can update users
+        HttpSession session = request.getSession(false);
+        if (session == null || !"admin".equals(session.getAttribute("role"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Access denied. Only admin can update users.")));
+            return;
+        }
+
         BufferedReader reader = request.getReader();
         User user = gson.fromJson(reader, User.class);
         
@@ -62,7 +80,14 @@ public class UserServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
-
+        // Check authorization - only admin can delete users
+        HttpSession session = request.getSession(false);
+        if (session == null || !"admin".equals(session.getAttribute("role"))) {
+            response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+            PrintWriter out = response.getWriter();
+            out.print(gson.toJson(new Response(false, "Access denied. Only admin can delete users.")));
+            return;
+        }
         String username = request.getParameter("id");
         boolean success = userDAO.deleteUser(username);
 
