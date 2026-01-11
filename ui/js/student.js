@@ -38,6 +38,7 @@ function addStudent(student) {
     fetch(API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(student)
     })
     .then(response => response.json())
@@ -59,6 +60,7 @@ function updateStudent(oldId, student) {
     fetch(API_URL, {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify(student)
     })
     .then(response => response.json())
@@ -79,7 +81,8 @@ function updateStudent(oldId, student) {
 function deleteStudent(id) {
     if (confirm('Are you sure you want to delete this student?')) {
         fetch(`${API_URL}?id=${id}`, {
-            method: 'DELETE'
+            method: 'DELETE',
+            credentials: 'include'
         })
         .then(response => response.json())
         .then(data => {

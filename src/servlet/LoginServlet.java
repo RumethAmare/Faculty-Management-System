@@ -17,6 +17,7 @@ public class LoginServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
 
         try {
             // Read request body
@@ -33,10 +34,17 @@ public class LoginServlet extends HttpServlet {
             PrintWriter out = response.getWriter();
             
             if (actualRole != null && actualRole.equals(expectedRole)) {
-                // Login successful
+                // Login successful - Create session
+                HttpSession session = request.getSession(true);
+                session.setAttribute("username", username);
+                session.setAttribute("role", actualRole);
+                session.setMaxInactiveInterval(30 * 60); // 30 minutes
+                
                 JsonObject responseData = new JsonObject();
                 responseData.addProperty("success", true);
                 responseData.addProperty("role", actualRole);
+                responseData.addProperty("username", username);
+                responseData.addProperty("sessionId", session.getId());
                 responseData.addProperty("message", "Login successful");
                 out.print(gson.toJson(responseData));
             } else {
